@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for
 from data_manager import DataManager
-from models import db, Movie
+from models import db, Movie, User
 import os
 
 app = Flask(__name__)
@@ -26,6 +26,19 @@ def list_users():
     data_manager.create_user(username)
     return redirect(url_for('home'))
 
+@app.route('/users/<int:user_id>/movies', methods=['GET', 'POST'])
+def user_movies(user_id):
+    if request.method == 'GET':
+        movies = data_manager.get_movies(user_id)
+        return render_template('movies_list.html', movies=movies, user_id=user_id)
+
+    else:
+        movie_title = request.form.get('title')
+        data_manager.add_movie(movie_title, user_id)
+        return redirect(url_for('user_movies', user_id=user_id))
+
+
+
 
 if __name__ == '__main__':
   """
@@ -33,4 +46,5 @@ if __name__ == '__main__':
   with app.app_context():
     db.create_all()
     """
+
   app.run(host="0.0.0.0", port=5001, debug=True)

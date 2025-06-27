@@ -27,7 +27,7 @@ class DataManager:
             new_movie = Movie(
                 name = data["Title"],
                 director = data["Director"],
-                year = data["Year"],
+                year = int(data["Year"]),
                 poster_url = data["Poster"],
                 user_id=user_id
             )
