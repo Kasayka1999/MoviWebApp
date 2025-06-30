@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Uxell Movie Web App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-<main class="container">
+<main class="container mx-auto p-4">
         {% block content %}{% endblock %}
 </main>
 </body>
