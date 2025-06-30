@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div class="container">
+{% extends "base.html" %}
+{% block content %}
 {% for movie in movies %}
     <div class="movie-container">
         <img src="{{ movie.poster_url }}" alt="Movie Poster">
@@ -32,5 +26,4 @@
 
     <button type="submit">Add Movie</button>
 </form>
-</body>
-</html>
+{% endblock %}

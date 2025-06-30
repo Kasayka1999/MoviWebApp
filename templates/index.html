@@ -1,21 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-{% for user in users %}
-<p>{{ user.name }} with ID: {{ user.id }} <a href="{{ url_for('user_movies', user_id=user.id) }}">Go to Movies</a> </p>
-{% endfor %}
+{% extends "base.html" %}
+{% block content %}
+<h1>Users</h1>
+<ul class="user-list">
+    {% for user in users %}
+        <li class="user-entry">
+            {{ user.name }} <a href="{{ url_for('user_movies', user_id=user.id) }}">Movies Collection</a>
+        </li>
+    {% endfor %}
+</ul>
 
 <h1>Add a New User</h1>
 
-<form action="/users" method="POST">
+<form action="{{ url_for('create_user') }}" method="post">
     <label for="name">User Name:</label>
     <input type="text" id="name" name="name" required>
 
     <button type="submit">Add User</button>
 </form>
-</body>
-</html>
+{% endblock %}

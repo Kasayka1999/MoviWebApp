@@ -21,7 +21,7 @@ def home():
 
 
 @app.route('/users', methods=['POST'])
-def list_users():
+def create_user():
     username = request.form.get('name')
     data_manager.create_user(username)
     return redirect(url_for('home'))
@@ -30,7 +30,7 @@ def list_users():
 def user_movies(user_id):
     if request.method == 'GET':
         movies = data_manager.get_movies(user_id)
-        return render_template('movies_list.html', movies=movies, user_id=user_id)
+        return render_template('movies.html', movies=movies, user_id=user_id)
 
     else:
         movie_title = request.form.get('title')
