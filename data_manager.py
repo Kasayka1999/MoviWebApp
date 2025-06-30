@@ -55,3 +55,15 @@ class DataManager:
             return f"Movie '{movie.name}' deleted successfully."
         else:
             raise ValueError(f"Movie with ID {movie_id} not found.")
+
+    def delete_user(self, user_id):
+        user = User.query.get(user_id)
+        if user:
+            if user.movies:  # If user has related movies
+                raise ValueError("This user has movies in their collection. Please delete all movies first.")
+            db.session.delete(user)
+            db.session.commit()
+            return f"User '{user.name}' deleted successfully."
+        else:
+            raise ValueError(f"User with ID {user_id} not found.")
+

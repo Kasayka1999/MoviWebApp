@@ -1,23 +1,64 @@
 {% extends "base.html" %}
 {% block content %}
+
+<!-- Alert -->
 {% if error %}
-  <p style="color:red;">{{ error }}</p>
+  <div class="bg-red-100 dark:bg-red-400/10 text-red-800 dark:text-red-300 px-4 py-3 rounded-xl shadow mb-6 border border-red-200 dark:border-red-400/30 backdrop-blur">
+    ⚠️ {{ error }}
+  </div>
 {% endif %}
-<h1 class="text-3xl font-bold text-blue-600 mb-4">Users</h1>
-<ul class="user-list">
-    {% for user in users %}
-        <li class="user-entry">
-            {{ user.name }} <a href="{{ url_for('user_movies', user_id=user.id) }}">Movies Collection</a>
-        </li>
-    {% endfor %}
-</ul>
 
-<h1>Add a New User</h1>
+<!-- Page Heading -->
+<div class="text-center mb-10">
+  <h1 class="text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white mb-2">
+    👤 Manage Users
+  </h1>
+  <p class="text-gray-500 dark:text-gray-400 text-lg">Your current list of users with actions</p>
+</div>
 
-<form action="{{ url_for('create_user') }}" method="post">
-    <label for="name">User Name:</label>
-    <input type="text" id="name" name="name" required>
+<!-- User List -->
+<div class="space-y-6 mb-20">
+  {% for user in users %}
+    <div class="bg-white/90 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg hover:shadow-xl backdrop-blur-md p-6 transition-all duration-300">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <div class="text-lg font-semibold text-gray-900 dark:text-white">{{ user.name }}</div>
+          <div class="text-sm text-gray-400 dark:text-gray-500">User ID: {{ user.id }}</div>
+        </div>
 
-    <button type="submit">Add User</button>
-</form>
+        <div class="flex flex-col sm:flex-row gap-3 mt-2 sm:mt-0 sm:justify-end">
+        <a href="{{ url_for('user_movies', user_id=user.id) }}"
+           class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+          View Movies
+        </a>
+
+        <form action="{{ url_for('delete_user', user_id=user.id) }}" method="POST">
+          <button type="submit"
+                  class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 transition">
+            Delete User
+          </button>
+        </form>
+      </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<!-- Add New User -->
+<div class="bg-gradient-to-br from-white/80 to-white dark:from-gray-800/60 dark:to-gray-900/40 backdrop-blur-md p-10 rounded-2xl shadow-2xl max-w-xl mx-auto">
+  <h2 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white text-center">➕ Add New User</h2>
+  <form action="{{ url_for('create_user') }}" method="post" class="space-y-6">
+    <div>
+      <label for="name" class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">User Name</label>
+      <input type="text" id="name" name="name" placeholder="e.g. Alice"
+             class="w-full px-5 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white/60 dark:bg-gray-900/30 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+             required>
+    </div>
+    <button type="submit"
+            class="w-full py-3 px-5 bg-green-500 hover:bg-green-600 text-white text-lg font-semibold rounded-xl shadow hover:shadow-md transition">
+      ➕ Create User
+    </button>
+  </form>
+</div>
+
 {% endblock %}

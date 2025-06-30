@@ -73,6 +73,19 @@ def delete_user_movie(user_id, movie_id):
     except IOError as e:
         print("An IOError occurred: ", str(e))
 
+@app.route('/users/<int:user_id>/delete', methods=['POST'])
+def delete_user(user_id):
+    try:
+        data_manager.delete_user(user_id)
+        print("here")
+        return redirect(url_for('home'))
+    except IOError as e:
+        print("An IOError occurred: ", str(e))
+    except ValueError as e:
+        users = data_manager.get_users()
+        error = str(e)
+        return render_template('index.html', users=users, error=error)
+
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -80,7 +93,11 @@ def page_not_found(e):
 
 @app.errorhandler(500)
 def page_not_found(e):
-    return render_template('404.html'), 404
+    return render_template('404.html'), 500
+
+@app.errorhandler(405)
+def page_not_found(e):
+    return render_template('404.html'), 405
 
 if __name__ == '__main__':
   """
