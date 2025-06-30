@@ -5,9 +5,23 @@
     <title>Title</title>
 </head>
 <body>
+<div class="container">
 {% for movie in movies %}
-<p>{{ movie.name }}</p>
+    <div class="movie-container">
+        <img src="{{ movie.poster_url }}" alt="Movie Poster">
+        <p>{{ movie.name }}</p>
+        <form action="{{ url_for('update_movie', user_id=movie.user_id, movie_id=movie.id, new_movie_name=new_title) }}" method="POST">
+            <label for="new_title">New Title:</label>
+            <input type="text" id="new_title" name="new_title" required>
+            <button type="submit">Update Title</button>
+        </form>
+        <form action="{{ url_for('delete_user_movie', user_id=user_id, movie_id=movie.id) }}" method="POST">
+            <button type="submit">Delete Movie</button>
+        </form>
+    </div>
 {% endfor %}
+    
+    </div>
 
 
 <h1>Add a New Movie</h1>

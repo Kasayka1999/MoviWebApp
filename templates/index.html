@@ -6,7 +6,7 @@
 </head>
 <body>
 {% for user in users %}
-<p>{{ user.name }} with ID: {{ user.id }} </p>
+<p>{{ user.name }} with ID: {{ user.id }} <a href="{{ url_for('user_movies', user_id=user.id) }}">Go to Movies</a> </p>
 {% endfor %}
 
 <h1>Add a New User</h1>
