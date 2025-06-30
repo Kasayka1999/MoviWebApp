@@ -71,8 +71,8 @@ A full-stack Flask-based movie collection manager that allows you to:
 
 Dark-mode UI with grid layout, modal updates, and responsive design using TailwindCSS.
 
-![Screenshot](screenshot1.png)
-![Screenshot](screenshot2.png)
+![Screenshot](Screenshot1.png)
+![Screenshot](Screenshot2.png)
 
 ---
 
