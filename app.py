@@ -34,8 +34,13 @@ def user_movies(user_id):
 
     else:
         movie_title = request.form.get('title')
-        data_manager.add_movie(movie_title, user_id)
-        return redirect(url_for('user_movies', user_id=user_id))
+        try:
+            data_manager.add_movie(movie_title, user_id)
+            return redirect(url_for('user_movies', user_id=user_id))
+        except ValueError as e:
+            error_message = str(e)
+            movies = data_manager.get_movies(user_id)
+            return render_template('movies.html', movies=movies, user_id=user_id, error=error_message)
 
 @app.route('/users/<int:user_id>/movies/<int:movie_id>/update', methods=['POST'])
 def update_movie(user_id, movie_id):
